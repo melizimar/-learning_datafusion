@@ -13,9 +13,14 @@ async fn main() -> datafusion::error::Result<()> {
         .has_header(true)
         .file_extension("csv");
 
-    ctx.register_csv("table", input, opts).await?;
+    ctx.register_csv("csv_table", input, opts).await?;
 
-    let query = "SELECT nome FROM table";
+    let query = r#"
+        SELECT 
+            *
+        FROM csv_table
+        LIMIT 10
+    "#;
 
     let df = ctx.sql(query).await?;
 
