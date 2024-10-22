@@ -1,8 +1,10 @@
+use std::error::Error;
+
 use datafusion::prelude::*;
 use datafusion::arrow::util::pretty;
 
 #[tokio::main]
-async fn main() -> datafusion::error::Result<()> {
+async fn main() -> Result<(), Box<dyn Error>> {
 
     let ctx = SessionContext::new();
 
@@ -47,7 +49,7 @@ fn get_headers(df: &DataFrame) -> Vec<String> {
     let columns: Vec<String> = schema
         .fields()
         .iter()
-        .map(|f| f.name().clone()) // Pegar os nomes das colunas
+        .map(|f| f.name().clone()) // Pega os nomes das colunas
         .collect();
 
     columns
